@@ -1,8 +1,10 @@
 const express = require("express");
+require("dotenv").config();
+require("express-async-errors");
 const connectDB = require("./db/connect");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
-require("dotenv").config();
+const productsRouter = require("./routes/products");
 const app = express();
 
 //middlewares
@@ -16,6 +18,7 @@ app.get("/", (req, res) => {
 const port = process.env.PORT || 5000;
 
 //Error and Not Found middlewares
+app.use("/api/v1/products", productsRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
